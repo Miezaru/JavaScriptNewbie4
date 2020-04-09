@@ -1,0 +1,15 @@
+# IntellijIdea files
+.idea/
+.DS_Store
+.vscode/
+assets/scss/
+node_modules/
+yarn.lock
+.bashrc
+.bashrc.swp
+.eslintignore
+.eslintrc
+.jshintrc
+.prettierrc
+package-lock.json
+package.json
