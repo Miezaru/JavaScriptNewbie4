@@ -151,7 +151,7 @@ let getWeekDay = date => {
     ? 'пятница'
     : date.getDay() == 6
     ? 'суббота'
-    : 'воскресение';
+    : 'воскресенье';
 };
 console.log(getWeekDay('2019-01-30')); // среда
 console.log(getWeekDay('2019-07-16')); // вторник
@@ -166,7 +166,11 @@ console.log(getWeekDay('2019-07-27')); // суббота
 
 let getLocalDay = date => {
   date = new Date(date);
-  return date.getDay();
+  let day = date.getDay();
+  if (day === 0) {
+    day = 7;
+  }
+  return day;
 };
 
 console.log(getLocalDay('2019-07-16')); // 2
@@ -208,7 +212,7 @@ console.log(getDateAgo('2019-01-29', 365)); // 29.01.2018
  * Способ создания прототипа не регламентирован.
  * Объекты и их методы, созданные прототипом должны полностью соответствовать объектам из прошлого задания.
  */
-let yearNow = new Date().getFullYear() - 1;
+let yearNow = new Date().getFullYear();
 
 function information() {
   return (
@@ -223,30 +227,38 @@ function information() {
     this.used
   );
 }
-class Car {
-  constructor(engine, model, name, year, used, info) {
-    this.engine = engine;
-    this.model = model;
-    this.name = name;
-    this.year = year;
-    this.info = information;
-  }
-}
+let Car = function (engine, model, name, year, used, info) {
+  this.engine = engine;
+  this.model = model;
+  this.name = name;
+  this.year = year;
+  this.info = information;
+};
+
+// class Car {
+//   constructor(engine, model, name, year, used, info) {
+//     this.engine = engine;
+//     this.model = model;
+//     this.name = name;
+//     this.year = year;
+//     this.info = information;
+//   }
+// }
 Object.defineProperties(Car.prototype, {
   used: {
     get() {
       return yearNow - this.year > 1 ? 'used' : 'new';
     },
     set(value) {
-      const yearNow = new Date().getFullYear() - 1;
+      const yearNow = new Date().getFullYear();
 
       if (value === 'new' && this.year < yearNow) this.year = yearNow;
     },
   },
 });
 
-let car = new Car(2000, 'Lacetti', 'Chevrolet', 2010);
-let car2 = new Car(5000, 'FX50 AWD', 'Infinite', 2019);
+var car = new Car(2000, 'Lacetti', 'Chevrolet', 2010);
+var car2 = new Car(5000, 'FX50 AWD', 'Infinite', 2019);
 console.log(car.info()); // chevrolet Lacetti, 2010cc, year 2010, used
 car.used = 'new';
 console.log(car.info()); // chevrolet Lacetti, 2019cc, year 2019, new -- год изменен
