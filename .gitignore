@@ -11,5 +11,3 @@ yarn.lock
 .eslintrc
 .jshintrc
 .prettierrc
-package-lock.json
-package.json
